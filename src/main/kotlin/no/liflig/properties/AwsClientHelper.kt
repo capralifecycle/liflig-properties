@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.ssm.model.InvalidKeyIdException
 import software.amazon.awssdk.services.ssm.model.ParameterNotFoundException
 import software.amazon.awssdk.services.ssm.model.ParameterVersionNotFoundException
 
-internal object AwsClientHelper {
+object AwsClientHelper {
     private val systemsManagement = SsmClient.builder()
         .build()
     private val secretsManager = SecretsManagerClient.builder()
