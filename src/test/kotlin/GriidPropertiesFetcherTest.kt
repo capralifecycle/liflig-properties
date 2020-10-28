@@ -10,7 +10,7 @@ internal class GriidPropertiesFetcherTest {
         val jsonSecret =
             """{"password": "eeShee0haiv9"}"""
         val baseKey = "app.db"
-        val ret = GriidPropertiesFetcher.renameKeyAndSerializeValue(jsonSecret, baseKey)
+        val ret = GriidPropertiesFetcher().renameKeyAndSerializeValue(jsonSecret, baseKey)
         assertEquals(expected, ret)
     }
 
@@ -20,7 +20,7 @@ internal class GriidPropertiesFetcherTest {
             """{"password": [1, 2]}"""
         val baseKey = "app.db"
         assertThrows(IllegalStateException::class.java) {
-            GriidPropertiesFetcher.renameKeyAndSerializeValue(jsonSecret, baseKey)
+            GriidPropertiesFetcher().renameKeyAndSerializeValue(jsonSecret, baseKey)
         }
     }
 }

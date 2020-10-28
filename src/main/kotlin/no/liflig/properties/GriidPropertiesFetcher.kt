@@ -6,25 +6,10 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import java.util.Properties
 
-object GriidPropertiesFetcher : AwsPropertiesFetcher {
-
+class GriidPropertiesFetcher {
     private val serializer = JsonElement.serializer()
     private val json = Json {}
 
-    override fun getProperties(path: String): Properties =
-        Properties().apply {
-            putAll(parametersByPath(path))
-        }
-
-    override fun getSecrets(path: String): Properties =
-        Properties().apply {
-            putAll(secretsByPath(path))
-        }
-
-    /**
-     * keep this around for backwards compatibility
-     * @deprecated use getProperties(path: String) and getSecrets(path: String) instead.
-     */
     fun forPrefix(ssmPrefix: String): Properties =
         Properties().apply {
             putAll(parametersByPath(ssmPrefix))
@@ -61,9 +46,4 @@ object GriidPropertiesFetcher : AwsPropertiesFetcher {
                 }
             }
             .toList()
-}
-
-interface AwsPropertiesFetcher {
-    fun getProperties(path: String): Properties
-    fun getSecrets(path: String): Properties
 }
