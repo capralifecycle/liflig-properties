@@ -31,7 +31,9 @@ class PropertiesLoaderTest {
 
     @Test
     fun `loads invalid files`() {
-        // Java properties loading does not perform any validation
+        // Java properties loading does not perform any validation,
+        // leading to some strange/unexpected results if properties being
+        // loaded is not following the expected format, instead of failing.
         val properties = loadPropertiesInternal(
             applicationProperties = "testdata/invalid.properties"
         )
