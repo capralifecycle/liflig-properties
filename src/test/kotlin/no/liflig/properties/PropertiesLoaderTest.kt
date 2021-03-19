@@ -14,9 +14,7 @@ class PropertiesLoaderTest {
     @Test
     fun `should load properties for normal runtime with SSM params`() {
         val awsPath = "/construct/current"
-        val mockProperties = Properties().apply {
-            put("hacker.name", "Henrik")
-        }
+        val mockProperties = mapOf("hacker.name" to "Henrik").toProperties()
 
         val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
             every { forPrefix(awsPath) } returns mockProperties
