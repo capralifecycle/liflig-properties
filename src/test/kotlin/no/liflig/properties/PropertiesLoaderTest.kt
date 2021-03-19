@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.Properties
 
-// By default no properties files will match the default names and be loaded
+// The properties files in this project is named so that by default no files
+// matches the conventions (meaning no properties gets loaded by default).
+// We override file names in tests to simulate environments matching a specific set of files.
 class PropertiesLoaderTest {
 
     @Test
