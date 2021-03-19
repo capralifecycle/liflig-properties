@@ -47,7 +47,7 @@ class PropertiesLoaderTest {
     }
 
     @Test
-    fun `override properties are loaded`() {
+    fun `an overrides file have precedence over the default application properties`() {
         val properties = loadPropertiesInternal(
             applicationProperties = "testdata/application.properties",
             overridesProperties = "overrides-for-test.properties"
