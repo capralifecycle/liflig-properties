@@ -56,15 +56,6 @@ class PropertiesLoaderTest {
     }
 
     @Test
-    fun `test overrides are loaded`() {
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/application.properties",
-            applicationTestProperties = "testdata/application-test.properties"
-        )
-        assertEquals("Trinity", properties.getProperty("hacker.name"))
-    }
-
-    @Test
     fun `test properties have precedence over all other properties`() {
         val awsPath = "/construct/current"
         val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
