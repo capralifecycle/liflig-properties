@@ -47,7 +47,7 @@ private fun fromParameterStore(
         val ssmPrefixEnvName = "SSM_PREFIX"
         when (val ssmPrefix = getenv(ssmPrefixEnvName)) {
             null -> logger.info(
-                "[$ssmPrefixEnvName] environment variable not found - no properties loaded from AWS Parameter Store"
+                "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store"
             )
             else -> {
                 putAll(griidPropertiesFetcher.forPrefix(ssmPrefix))
