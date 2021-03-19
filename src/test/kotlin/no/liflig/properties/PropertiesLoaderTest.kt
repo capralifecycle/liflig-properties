@@ -59,9 +59,7 @@ class PropertiesLoaderTest {
     fun `test properties have precedence over all other properties`() {
         val awsPath = "/construct/current"
         val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
-            every { forPrefix(awsPath) } returns Properties().apply {
-                put("hacker.name", "Henrik")
-            }
+            every { forPrefix(awsPath) } returns mapOf("hacker.name" to "Henrik").toProperties()
         }
 
         val properties = loadPropertiesInternal(
