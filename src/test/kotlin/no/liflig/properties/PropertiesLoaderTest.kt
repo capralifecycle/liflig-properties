@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.util.Properties
 
 // The properties files in this project is named so that by default no files
 // matches the conventions (meaning no properties gets loaded by default).
