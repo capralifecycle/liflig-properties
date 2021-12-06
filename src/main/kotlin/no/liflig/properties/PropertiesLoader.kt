@@ -22,10 +22,17 @@ private val logger = LoggerFactory.getLogger(PropertiesLoader::class.java)
  * will be loaded before overrides.properties.
  *
  * All sources are optional.
+ *
+ * @throws PropertyLoadingException when it fails to load a property, for example
+ * when a secret ([SecretLoadingException]) or SSM parameter ([ParameterLoadingException]) is invalid.
+ * This exception has multiple subclasses, for finer grained catching.
  */
+@Throws(PropertyLoadingException::class)
+@Suppress("unused" /* This is the entry point for library consumers. */)
 fun loadProperties() = loadPropertiesInternal()
 
 // For testing
+@Throws(PropertyLoadingException::class)
 internal fun loadPropertiesInternal(
     applicationProperties: String = "application.properties",
     applicationTestProperties: String = "application-test.properties",
@@ -44,6 +51,7 @@ internal fun loadPropertiesInternal(
         }
         .also { logger.info("Loaded ${it.size} properties in total") }
 
+@Throws(PropertyLoadingException::class)
 private fun fromParameterStore(
     griidPropertiesFetcher: GriidPropertiesFetcher,
     getenv: (String) -> String?

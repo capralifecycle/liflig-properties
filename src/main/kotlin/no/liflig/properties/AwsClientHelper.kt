@@ -23,6 +23,7 @@ object AwsClientHelper {
     private val secretsManager = SecretsManagerClient.builder()
         .build()
 
+    @Throws(ParameterLoadingException::class)
     fun getParametersByPath(path: String): Map<String, String> {
         logger.debug("Loading parameters at path {}", path)
         val parameters = mutableMapOf<String, String>()
@@ -41,22 +42,36 @@ object AwsClientHelper {
                 }
             }
         } catch (e: InternalServerErrorException) {
-            // An error occurred on the server side.
-            throw e
+            throw ParameterLoadingException.InternalErrorException(
+                path,
+                "An error occurred on the server side.",
+                e
+            )
         } catch (e: InvalidKeyIdException) {
-            // The query key ID is not valid.
-            throw e
+            throw ParameterLoadingException.InvalidParameterException(
+                path,
+                "The query key ID is not valid.",
+                e
+            )
         } catch (e: ParameterNotFoundException) {
-            // The parameter could not be found. Verify the name and try again.
-            throw e
+            throw ParameterLoadingException.InvalidParameterException(
+                path,
+                "The parameter could not be found. Verify the name and try again.",
+                e
+            )
         } catch (e: ParameterVersionNotFoundException) {
-            // The specified parameter version was not found. Verify the parameter name and version, and try again.
-            throw e
+            throw ParameterLoadingException.InvalidParameterException(
+                path,
+                "The specified parameter version was not found. " +
+                    "Verify the parameter name and version, and try again.",
+                e
+            )
         }
 
         return parameters
     }
 
+    @Throws(SecretLoadingException::class)
     fun getSecret(path: String): String {
         logger.debug("Loading secret at path {}", path)
         val response: GetSecretValueResponse
@@ -68,26 +83,80 @@ object AwsClientHelper {
         try {
             response = secretsManager.getSecretValue(request)
         } catch (e: ResourceNotFoundException) {
-            // We can't find the resource that you asked for.
-            throw e
+            throw SecretLoadingException.InvalidSecretException(
+                path,
+                "We can't find the resource that you asked for.",
+                e
+            )
         } catch (e: InvalidParameterException) {
-            // You provided an invalid value for a parameter.
-            throw e
+            throw SecretLoadingException.InvalidSecretException(
+                path,
+                "You provided an invalid value for a parameter.",
+                e
+            )
         } catch (e: InvalidRequestException) {
-            // You provided a parameter value that is not valid for the current state of the resource.
-            // Possible causes:
-            //   You tried to perform the operation on a secret that's currently marked deleted.
-            //   You tried to enable rotation on a secret that doesn't already have a
-            //     Lambda function ARN configured and you didn't include such an ARN as a parameter in this call.
-            throw e
+            throw SecretLoadingException.InvalidSecretException(
+                path,
+                """You provided a parameter value that is not valid for the current state of the resource. Possible causes:
+                    |You tried to perform the operation on a secret that's currently marked deleted.
+                    |You tried to enable rotation on a secret that doesn't already have a
+                    |Lambda function ARN configured and you didn't include such an ARN as a parameter in this call.""".trimMargin(),
+                e
+            )
         } catch (e: DecryptionFailureException) {
-            // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
-            throw e
+            throw SecretLoadingException.DecryptionException(
+                path,
+                "Secrets Manager can't decrypt the protected secret text using the provided KMS key.",
+                e
+            )
         } catch (e: InternalServiceErrorException) {
-            // An error occurred on the server side
-            throw e
+            throw SecretLoadingException.InternalErrorException(
+                path,
+                "An error occurred on the server side",
+                e
+            )
         }
 
         return response.secretString()
     }
+}
+
+sealed class ParameterLoadingException(
+    message: String,
+    cause: Throwable?
+) : PropertyLoadingException(message, cause) {
+    data class InvalidParameterException(
+        val parameter: String,
+        override val message: String,
+        override val cause: Throwable?
+    ) : ParameterLoadingException(message, cause)
+
+    data class InternalErrorException(
+        val parameter: String,
+        override val message: String,
+        override val cause: Throwable?
+    ) : ParameterLoadingException(message, cause)
+}
+
+sealed class SecretLoadingException(
+    message: String,
+    cause: Throwable?
+) : PropertyLoadingException(message, cause) {
+    data class InvalidSecretException(
+        val secretPath: String,
+        override val message: String,
+        override val cause: Throwable?
+    ) : SecretLoadingException(message, cause)
+
+    data class DecryptionException(
+        val secretPath: String,
+        override val message: String,
+        override val cause: Throwable?
+    ) : SecretLoadingException(message, cause)
+
+    data class InternalErrorException(
+        val secretPath: String,
+        override val message: String,
+        override val cause: Throwable?
+    ) : SecretLoadingException(message, cause)
 }

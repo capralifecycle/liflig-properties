@@ -10,16 +10,19 @@ class GriidPropertiesFetcher {
     private val serializer = JsonElement.serializer()
     private val json = Json {}
 
+    @Throws(PropertyLoadingException::class)
     fun forPrefix(ssmPrefix: String): Properties =
         Properties().apply {
             putAll(parametersByPath(ssmPrefix))
             putAll(secretsByPath(ssmPrefix))
         }
 
+    @Throws(ParameterLoadingException::class, SecretLoadingException::class)
     private fun parametersByPath(path: String): Map<String, String> =
         AwsClientHelper.getParametersByPath("$path/config/")
             .mapKeys { (key, _) -> key.removePrefix("$path/config/") }
 
+    @Throws(ParameterLoadingException::class, SecretLoadingException::class)
     private fun secretsByPath(path: String): Map<String, String> =
         AwsClientHelper.getParametersByPath("$path/secrets/")
             .flatMap { (parameterKey, parameterValue) ->
