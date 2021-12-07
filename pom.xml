@@ -29,7 +29,7 @@
 
   <properties>
     <!-- Increment major version for breaking changes -->
-    <major-version>1</major-version>
+    <major-version>2</major-version>
     <revision>${major-version}.local-SNAPSHOT</revision>
 
     <java.version>1.8</java.version>
