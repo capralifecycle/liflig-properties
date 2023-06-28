@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -10,60 +10,35 @@
   <version>${revision}</version>
 
   <scm>
-    <developerConnection>scm:git:https://github.com/capralifecycle/liflig-properties.git
-    </developerConnection>
+    <developerConnection>scm:git:https://github.com/capralifecycle/liflig-properties.git</developerConnection>
     <connection>scm:git:https://github.com/capralifecycle/liflig-properties.git</connection>
     <url>https://github.com/capralifecycle/liflig-properties</url>
     <tag>HEAD</tag>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/capralifecycle/liflig-properties</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
     <!-- Increment major version for breaking changes -->
-    <major-version>3</major-version>
+    <major-version>2</major-version>
     <revision>${major-version}.local-SNAPSHOT</revision>
 
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <!-- Required by JUnit  -->
-    <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.target>{java.version}</maven.compiler.target>
 
-    <kotlin.version>2.3.0</kotlin.version>
-    <kotlinx.serialization.version>1.9.0</kotlinx.serialization.version>
-    <aws-sdk.version>2.40.11</aws-sdk.version>
-    <liflig-logging.version>3.20251201.114154</liflig-logging.version>
+    <kotlin.version>1.6.21</kotlin.version>
+    <kotlinx.serialization.version>1.4.1</kotlinx.serialization.version>
+    <aws-sdk.version>2.20.93</aws-sdk.version>
+    <slf4j.version>1.7.36</slf4j.version>
 
-    <!-- Testing -->
-    <junit.version>6.0.1</junit.version>
-    <mockk.version>1.14.7</mockk.version>
-    <logback.version>1.5.22</logback.version>
+    <junit.version>5.9.3</junit.version>
+    <mockk.version>1.12.5</mockk.version>
 
-    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-    <spotless-maven-plugin.version>3.1.0</spotless-maven-plugin.version>
-    <ktfmt.version>0.58</ktfmt.version>
-    <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+    <ktlint-maven-plugin.version>1.11.2</ktlint-maven-plugin.version>
+    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
   </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${junit.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -91,16 +66,17 @@
       <version>${aws-sdk.version}</version>
     </dependency>
 
+
     <dependency>
-      <groupId>no.liflig</groupId>
-      <artifactId>liflig-logging</artifactId>
-      <version>${liflig-logging.version}</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
 
     <!-- Testing -->
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test-junit5</artifactId>
+      <artifactId>kotlin-test</artifactId>
       <version>${kotlin.version}</version>
       <scope>test</scope>
     </dependency>
@@ -111,31 +87,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>io.mockk</groupId>
-      <artifactId>mockk-jvm</artifactId>
+      <artifactId>mockk</artifactId>
       <version>${mockk.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>${logback.version}</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <repositories>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/capralifecycle/*</url>
-    </repository>
-  </repositories>
 
   <build>
     <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
@@ -145,7 +108,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.4</version>
+          <version>2.8.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -175,7 +138,6 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-              <jvmTarget>${java.version}</jvmTarget>
               <sourceDirs>
                 <source>${project.basedir}/src/main/kotlin</source>
               </sourceDirs>
@@ -239,41 +201,18 @@
         </executions>
       </plugin>
 
-      <!-- spotless with ktfmt for code style -->
       <plugin>
-        <groupId>com.diffplug.spotless</groupId>
-        <artifactId>spotless-maven-plugin</artifactId>
-        <version>${spotless-maven-plugin.version}</version>
+        <groupId>com.github.gantsign.maven</groupId>
+        <artifactId>ktlint-maven-plugin</artifactId>
+        <version>${ktlint-maven-plugin.version}</version>
         <executions>
           <execution>
+            <id>check</id>
             <goals>
               <goal>check</goal>
             </goals>
-            <phase>validate</phase>
           </execution>
         </executions>
-        <configuration>
-          <formats>
-            <format>
-              <includes>
-                <include>*.md</include>
-                <include>.gitignore</include>
-              </includes>
-              <trimTrailingWhitespace/>
-              <endWithNewline/>
-              <indent>
-                <spaces>true</spaces>
-                <spacesPerTab>2</spacesPerTab>
-              </indent>
-            </format>
-          </formats>
-          <kotlin>
-            <ktfmt>
-              <version>${ktfmt.version}</version>
-              <style>META</style>
-            </ktfmt>
-          </kotlin>
-        </configuration>
       </plugin>
 
     </plugins>
