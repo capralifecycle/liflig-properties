@@ -16,13 +16,6 @@
     <tag>HEAD</tag>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>capra-releases</id>
-      <url>https://mvnrepo.capraconsulting.no/content/repositories/capra-releases</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
     <!-- Increment major version for breaking changes -->
     <major-version>2</major-version>
