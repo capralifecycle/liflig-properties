@@ -29,7 +29,7 @@
 
     <kotlin.version>1.9.10</kotlin.version>
     <kotlinx.serialization.version>1.6.0</kotlinx.serialization.version>
-    <aws-sdk.version>2.20.156</aws-sdk.version>
+    <aws-sdk.version>2.20.162</aws-sdk.version>
     <slf4j.version>1.7.36</slf4j.version>
 
     <junit.version>5.10.0</junit.version>
