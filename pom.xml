@@ -16,6 +16,13 @@
     <tag>HEAD</tag>
   </scm>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/capralifecycle/liflig-properties</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <!-- Increment major version for breaking changes -->
     <major-version>2</major-version>
