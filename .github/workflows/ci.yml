@@ -20,18 +20,18 @@ jobs:
       contents: write
       packages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4
         with:
           distribution: "zulu"
           java-version: "11.0.22"
           java-package: "jdk"
 
-      - uses: capralifecycle/actions-lib/check-runtime-dependencies@v1
+      - uses: capralifecycle/actions-lib/check-runtime-dependencies@cd2a4be2de5b16cdb06d91956962c9f75e649792 # v1
 
       - name: cache mvn
-        uses: actions/cache@v4
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -50,7 +50,7 @@ jobs:
           }
           echo "major-version=$major_version" >> "$GITHUB_OUTPUT"
 
-      - uses: capralifecycle/actions-lib/generate-tag@v1
+      - uses: capralifecycle/actions-lib/generate-tag@cd2a4be2de5b16cdb06d91956962c9f75e649792 # v1
         id: tag
         with:
           tag-prefix: "${{ steps.prep.outputs.major-version }}"
