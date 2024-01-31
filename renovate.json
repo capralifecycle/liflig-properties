@@ -1,6 +1,7 @@
 {
   "extends": [
     "github>capraconsulting/renovate-config:library",
-    "github>capraconsulting/renovate-config:aggressive"
+    "github>capraconsulting/renovate-config:aggressive",
+    "helpers:pinGitHubActionDigestsToSemver"
   ]
 }
