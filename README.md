@@ -24,6 +24,8 @@ This library is currently only distributed in Liflig internal repositories.
 This project follows
 https://confluence.capraconsulting.no/x/fckBC
 
+### Build
+
 To check build before pushing:
 
 ```bash
@@ -31,3 +33,17 @@ mvn verify
 ```
 
 The CI server will automatically release new version for builds on master.
+
+### Lint
+
+Lint code:
+
+```bash
+mvn spotless:check
+```
+
+Fix lint errors:
+
+```bash
+mvn spotless:apply
+```
