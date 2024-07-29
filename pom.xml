@@ -40,7 +40,7 @@
     <slf4j.version>2.0.13</slf4j.version>
 
     <junit.version>5.10.3</junit.version>
-    <mockk.version>1.12.5</mockk.version>
+    <mockk.version>1.13.12</mockk.version>
 
     <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
     <ktlint-maven-plugin.version>3.2.0</ktlint-maven-plugin.version>
