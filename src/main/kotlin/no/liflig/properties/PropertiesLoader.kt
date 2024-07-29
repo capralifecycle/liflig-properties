@@ -28,7 +28,7 @@ private val logger = LoggerFactory.getLogger(PropertiesLoader::class.java)
  * This exception has multiple subclasses, for finer grained catching.
  */
 @Throws(PropertyLoadingException::class)
-@Suppress("unused" /* This is the entry point for library consumers. */)
+@Suppress("unused") // This is the entry point for library consumers.
 fun loadProperties() = loadPropertiesInternal()
 
 // For testing
@@ -40,16 +40,15 @@ internal fun loadPropertiesInternal(
     overridesTestProperties: String = "overrides-test.properties",
     griidPropertiesFetcher: GriidPropertiesFetcher = GriidPropertiesFetcher(),
     getenv: (String) -> String? = System::getenv,
-) =
-    Properties()
-        .apply {
-            putAll(fromClasspath(applicationProperties))
-            putAll(fromParameterStore(griidPropertiesFetcher, getenv))
-            putAll(fromFile(File(overridesProperties)))
-            putAll(fromClasspath(applicationTestProperties))
-            putAll(fromFile(File(overridesTestProperties)))
-        }
-        .also { logger.info("Loaded ${it.size} properties in total") }
+) = Properties()
+    .apply {
+        putAll(fromClasspath(applicationProperties))
+        putAll(fromParameterStore(griidPropertiesFetcher, getenv))
+        putAll(fromFile(File(overridesProperties)))
+        putAll(fromClasspath(applicationTestProperties))
+        putAll(fromFile(File(overridesTestProperties)))
+    }
+    .also { logger.info("Loaded ${it.size} properties in total") }
 
 @Throws(PropertyLoadingException::class)
 private fun fromParameterStore(
@@ -59,9 +58,10 @@ private fun fromParameterStore(
     Properties().apply {
         val ssmPrefixEnvName = "SSM_PREFIX"
         when (val ssmPrefix = getenv(ssmPrefixEnvName)) {
-            null -> logger.info(
-                "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store",
-            )
+            null ->
+                logger.info(
+                    "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store",
+                )
             else -> {
                 putAll(griidPropertiesFetcher.forPrefix(ssmPrefix))
                 logger.info("Loaded $size properties from AWS Parameter Store using prefix [$ssmPrefix]. Keys: $keys")

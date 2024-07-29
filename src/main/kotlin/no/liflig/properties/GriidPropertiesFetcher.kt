@@ -33,14 +33,20 @@ class GriidPropertiesFetcher {
             }
             .toMap()
 
-    internal fun renameKeyAndSerializeValue(jsonSecret: String, baseKey: String): List<Pair<String, String>> =
+    internal fun renameKeyAndSerializeValue(
+        jsonSecret: String,
+        baseKey: String,
+    ): List<Pair<String, String>> =
         when (val jsonElement = json.decodeFromString(serializer, jsonSecret)) {
             is JsonPrimitive -> listOf(Pair(baseKey, jsonElement.toString()))
             is JsonObject -> serializeJsonObject(jsonElement, baseKey)
             else -> throw IllegalStateException("Secret $baseKey is neither JsonPrimitive nor JsonObject")
         }
 
-    private fun serializeJsonObject(jsonElement: JsonObject, baseKey: String): List<Pair<String, String>> =
+    private fun serializeJsonObject(
+        jsonElement: JsonObject,
+        baseKey: String,
+    ): List<Pair<String, String>> =
         jsonElement.entries
             .map { (secretKey, secretValue) ->
                 when (secretValue) {

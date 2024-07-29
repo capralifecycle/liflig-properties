@@ -18,21 +18,24 @@ import software.amazon.awssdk.services.ssm.model.ParameterVersionNotFoundExcepti
 
 object AwsClientHelper {
     private val logger = LoggerFactory.getLogger(AwsClientHelper::class.java)
-    private val systemsManagement = SsmClient.builder()
-        .build()
-    private val secretsManager = SecretsManagerClient.builder()
-        .build()
+    private val systemsManagement =
+        SsmClient.builder()
+            .build()
+    private val secretsManager =
+        SecretsManagerClient.builder()
+            .build()
 
     @Throws(ParameterLoadingException::class)
     fun getParametersByPath(path: String): Map<String, String> {
         logger.debug("Loading parameters at path {}", path)
         val parameters = mutableMapOf<String, String>()
 
-        val request = GetParametersByPathRequest.builder()
-            .path(path)
-            .withDecryption(true)
-            .recursive(true)
-            .build()
+        val request =
+            GetParametersByPathRequest.builder()
+                .path(path)
+                .withDecryption(true)
+                .recursive(true)
+                .build()
 
         try {
             val response = systemsManagement.getParametersByPathPaginator(request)
@@ -76,9 +79,10 @@ object AwsClientHelper {
         logger.debug("Loading secret at path {}", path)
         val response: GetSecretValueResponse
 
-        val request = GetSecretValueRequest.builder()
-            .secretId(path)
-            .build()
+        val request =
+            GetSecretValueRequest.builder()
+                .secretId(path)
+                .build()
 
         try {
             response = secretsManager.getSecretValue(request)
