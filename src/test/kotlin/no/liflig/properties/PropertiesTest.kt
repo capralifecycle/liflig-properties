@@ -76,7 +76,7 @@ class PropertiesTest {
                 "bar",
                 "123.0",
                 "123.3",
-            ]
+            ],
         )
         fun `int throws on invalid value`(input: String) {
             val exception = assertThrows<IllegalArgumentException> {
@@ -117,7 +117,7 @@ class PropertiesTest {
                 "bar",
                 "123.0",
                 "123.3",
-            ]
+            ],
         )
         fun `long throws on invalid value`(input: String) {
             val exception = assertThrows<IllegalArgumentException> {
@@ -147,7 +147,7 @@ class PropertiesTest {
                 "false,1",
                 "false,yes",
                 "false,0",
-            ]
+            ],
         )
         fun `boolean always resolves to true or false on value`(expected: Boolean, input: String) {
             assertEquals(expected, mapOf("foo" to input).toProperties().boolean("foo"))

@@ -39,7 +39,7 @@ internal fun loadPropertiesInternal(
     overridesProperties: String = "overrides.properties",
     overridesTestProperties: String = "overrides-test.properties",
     griidPropertiesFetcher: GriidPropertiesFetcher = GriidPropertiesFetcher(),
-    getenv: (String) -> String? = System::getenv
+    getenv: (String) -> String? = System::getenv,
 ) =
     Properties()
         .apply {
@@ -54,13 +54,13 @@ internal fun loadPropertiesInternal(
 @Throws(PropertyLoadingException::class)
 private fun fromParameterStore(
     griidPropertiesFetcher: GriidPropertiesFetcher,
-    getenv: (String) -> String?
+    getenv: (String) -> String?,
 ): Properties =
     Properties().apply {
         val ssmPrefixEnvName = "SSM_PREFIX"
         when (val ssmPrefix = getenv(ssmPrefixEnvName)) {
             null -> logger.info(
-                "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store"
+                "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store",
             )
             else -> {
                 putAll(griidPropertiesFetcher.forPrefix(ssmPrefix))
