@@ -22,7 +22,7 @@ class PropertiesLoaderTest {
         val properties = loadPropertiesInternal(
             applicationProperties = "testdata/application.properties",
             griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath }
+            getenv = { awsPath },
         )
 
         assertEquals("Henrik", properties.getProperty("hacker.name"))
@@ -34,7 +34,7 @@ class PropertiesLoaderTest {
         // leading to some strange/unexpected results if properties being
         // loaded is not following the expected format, instead of failing.
         val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/invalid.properties"
+            applicationProperties = "testdata/invalid.properties",
         )
         assertEquals("Smith", properties.getProperty("hacker.nameAgent"))
     }
@@ -49,7 +49,7 @@ class PropertiesLoaderTest {
     fun `an overrides file have precedence over the default application properties`() {
         val properties = loadPropertiesInternal(
             applicationProperties = "testdata/application.properties",
-            overridesProperties = "test-assets/overrides.properties"
+            overridesProperties = "test-assets/overrides.properties",
         )
         assertEquals("Morpheus", properties.getProperty("hacker.name"))
     }
@@ -66,7 +66,7 @@ class PropertiesLoaderTest {
             applicationTestProperties = "testdata/application-test.properties",
             overridesProperties = "test-assets/overrides.properties",
             griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath }
+            getenv = { awsPath },
         )
         assertEquals("Trinity", properties.getProperty("hacker.name"))
     }
@@ -84,7 +84,7 @@ class PropertiesLoaderTest {
             overridesProperties = "test-assets/overrides.properties",
             overridesTestProperties = "test-assets/overrides-test.properties",
             griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath }
+            getenv = { awsPath },
         )
         assertEquals("Dozer", properties.getProperty("hacker.name"))
     }
