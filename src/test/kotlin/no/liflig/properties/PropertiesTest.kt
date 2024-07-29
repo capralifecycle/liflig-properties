@@ -10,7 +10,6 @@ import java.util.Properties
 import kotlin.test.assertEquals
 
 class PropertiesTest {
-
     @Nested
     inner class ForString {
         @Test
@@ -25,9 +24,10 @@ class PropertiesTest {
 
         @Test
         fun `stringNotNull throws when the property does not exist`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                Properties().stringNotNull("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    Properties().stringNotNull("foo")
+                }
             assertEquals("Property 'foo' is either not found or value is empty", exception.message)
         }
 
@@ -38,17 +38,19 @@ class PropertiesTest {
 
         @Test
         fun `stringNotEmpty throws on empty string`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                mapOf("foo" to "").toProperties().stringNotEmpty("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    mapOf("foo" to "").toProperties().stringNotEmpty("foo")
+                }
             assertEquals("Property 'foo' contains an empty value", exception.message)
         }
 
         @Test
         fun `stringNotEmpty throws when the property does not exist`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                Properties().stringNotEmpty("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    Properties().stringNotEmpty("foo")
+                }
             assertEquals("Property 'foo' is either not found or value is empty", exception.message)
         }
     }
@@ -79,17 +81,19 @@ class PropertiesTest {
             ],
         )
         fun `int throws on invalid value`(input: String) {
-            val exception = assertThrows<IllegalArgumentException> {
-                mapOf("foo" to input).toProperties().int("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    mapOf("foo" to input).toProperties().int("foo")
+                }
             assertEquals("Property 'foo' contains an invalid integer: '$input'", exception.message)
         }
 
         @Test
         fun `intRequired throws when the property does not exist`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                Properties().intRequired("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    Properties().intRequired("foo")
+                }
             assertEquals("Property 'foo' is either not found or value is empty", exception.message)
         }
     }
@@ -120,17 +124,19 @@ class PropertiesTest {
             ],
         )
         fun `long throws on invalid value`(input: String) {
-            val exception = assertThrows<IllegalArgumentException> {
-                mapOf("foo" to input).toProperties().long("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    mapOf("foo" to input).toProperties().long("foo")
+                }
             assertEquals("Property 'foo' contains an invalid long: '$input'", exception.message)
         }
 
         @Test
         fun `longRequired throws when the property does not exist`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                Properties().longRequired("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    Properties().longRequired("foo")
+                }
             assertEquals("Property 'foo' is either not found or value is empty", exception.message)
         }
     }
@@ -149,7 +155,10 @@ class PropertiesTest {
                 "false,0",
             ],
         )
-        fun `boolean always resolves to true or false on value`(expected: Boolean, input: String) {
+        fun `boolean always resolves to true or false on value`(
+            expected: Boolean,
+            input: String,
+        ) {
             assertEquals(expected, mapOf("foo" to input).toProperties().boolean("foo"))
         }
 
@@ -165,9 +174,10 @@ class PropertiesTest {
 
         @Test
         fun `booleanRequired throws when the property does not exist`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                Properties().booleanRequired("foo")
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    Properties().booleanRequired("foo")
+                }
             assertEquals("Property 'foo' is either not found or value is empty", exception.message)
         }
     }

@@ -9,21 +9,22 @@ import org.junit.jupiter.api.Test
 // matches the conventions (meaning no properties gets loaded by default).
 // We override file names in tests to simulate environments matching a specific set of files.
 class PropertiesLoaderTest {
-
     @Test
     fun `should load properties for normal runtime with SSM params`() {
         val awsPath = "/construct/current"
         val mockProperties = mapOf("hacker.name" to "Henrik").toProperties()
 
-        val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
-            every { forPrefix(awsPath) } returns mockProperties
-        }
+        val griidPropertiesFetcher =
+            mockk<GriidPropertiesFetcher> {
+                every { forPrefix(awsPath) } returns mockProperties
+            }
 
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/application.properties",
-            griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath },
-        )
+        val properties =
+            loadPropertiesInternal(
+                applicationProperties = "testdata/application.properties",
+                griidPropertiesFetcher = griidPropertiesFetcher,
+                getenv = { awsPath },
+            )
 
         assertEquals("Henrik", properties.getProperty("hacker.name"))
     }
@@ -33,9 +34,10 @@ class PropertiesLoaderTest {
         // Java properties loading does not perform any validation,
         // leading to some strange/unexpected results if properties being
         // loaded is not following the expected format, instead of failing.
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/invalid.properties",
-        )
+        val properties =
+            loadPropertiesInternal(
+                applicationProperties = "testdata/invalid.properties",
+            )
         assertEquals("Smith", properties.getProperty("hacker.nameAgent"))
     }
 
@@ -47,45 +49,50 @@ class PropertiesLoaderTest {
 
     @Test
     fun `an overrides file have precedence over the default application properties`() {
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/application.properties",
-            overridesProperties = "test-assets/overrides.properties",
-        )
+        val properties =
+            loadPropertiesInternal(
+                applicationProperties = "testdata/application.properties",
+                overridesProperties = "test-assets/overrides.properties",
+            )
         assertEquals("Morpheus", properties.getProperty("hacker.name"))
     }
 
     @Test
     fun `test properties have precedence over other properties`() {
         val awsPath = "/construct/current"
-        val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
-            every { forPrefix(awsPath) } returns mapOf("hacker.name" to "Henrik").toProperties()
-        }
+        val griidPropertiesFetcher =
+            mockk<GriidPropertiesFetcher> {
+                every { forPrefix(awsPath) } returns mapOf("hacker.name" to "Henrik").toProperties()
+            }
 
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/application.properties",
-            applicationTestProperties = "testdata/application-test.properties",
-            overridesProperties = "test-assets/overrides.properties",
-            griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath },
-        )
+        val properties =
+            loadPropertiesInternal(
+                applicationProperties = "testdata/application.properties",
+                applicationTestProperties = "testdata/application-test.properties",
+                overridesProperties = "test-assets/overrides.properties",
+                griidPropertiesFetcher = griidPropertiesFetcher,
+                getenv = { awsPath },
+            )
         assertEquals("Trinity", properties.getProperty("hacker.name"))
     }
 
     @Test
     fun `test overrides properties have precedence over all other properties`() {
         val awsPath = "/construct/current"
-        val griidPropertiesFetcher = mockk<GriidPropertiesFetcher> {
-            every { forPrefix(awsPath) } returns mapOf("hacker.name" to "Henrik").toProperties()
-        }
+        val griidPropertiesFetcher =
+            mockk<GriidPropertiesFetcher> {
+                every { forPrefix(awsPath) } returns mapOf("hacker.name" to "Henrik").toProperties()
+            }
 
-        val properties = loadPropertiesInternal(
-            applicationProperties = "testdata/application.properties",
-            applicationTestProperties = "testdata/application-test.properties",
-            overridesProperties = "test-assets/overrides.properties",
-            overridesTestProperties = "test-assets/overrides-test.properties",
-            griidPropertiesFetcher = griidPropertiesFetcher,
-            getenv = { awsPath },
-        )
+        val properties =
+            loadPropertiesInternal(
+                applicationProperties = "testdata/application.properties",
+                applicationTestProperties = "testdata/application-test.properties",
+                overridesProperties = "test-assets/overrides.properties",
+                overridesTestProperties = "test-assets/overrides-test.properties",
+                griidPropertiesFetcher = griidPropertiesFetcher,
+                getenv = { awsPath },
+            )
         assertEquals("Dozer", properties.getProperty("hacker.name"))
     }
 }
