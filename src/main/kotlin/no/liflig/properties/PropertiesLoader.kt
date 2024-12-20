@@ -2,11 +2,11 @@ package no.liflig.properties
 
 import java.io.File
 import java.util.Properties
-import org.slf4j.LoggerFactory
+import no.liflig.logging.Logger
 
 private object PropertiesLoader
 
-private val logger = LoggerFactory.getLogger(PropertiesLoader::class.java)
+private val log = Logger {}
 
 /**
  * Load properties from file(s) and AWS Parameter Store.
@@ -48,7 +48,7 @@ internal fun loadPropertiesInternal(
           putAll(fromClasspath(applicationTestProperties))
           putAll(fromFile(File(overridesTestProperties)))
         }
-        .also { logger.info("Loaded ${it.size} properties in total") }
+        .also { properties -> log.info { "Loaded ${properties.size} properties in total" } }
 
 @Throws(PropertyLoadingException::class)
 private fun fromParameterStore(
@@ -59,13 +59,14 @@ private fun fromParameterStore(
       val ssmPrefixEnvName = "SSM_PREFIX"
       when (val ssmPrefix = getenv(ssmPrefixEnvName)) {
         null ->
-            logger.info(
-                "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store",
-            )
+            log.info {
+              "Environment variable [$ssmPrefixEnvName] not found - no properties loaded from AWS Parameter Store"
+            }
         else -> {
           putAll(griidPropertiesFetcher.forPrefix(ssmPrefix))
-          logger.info(
-              "Loaded $size properties from AWS Parameter Store using prefix [$ssmPrefix]. Keys: $keys")
+          log.info {
+            "Loaded $size properties from AWS Parameter Store using prefix [$ssmPrefix]. Keys: $keys"
+          }
         }
       }
     }
@@ -76,10 +77,10 @@ private fun fromParameterStore(
 private fun fromClasspath(filename: String): Properties =
     Properties().apply {
       when (val resource = PropertiesLoader.javaClass.classLoader.getResourceAsStream(filename)) {
-        null -> logger.info("File [$filename] not found on classpath - no properties loaded")
+        null -> log.info { "File [$filename] not found on classpath - no properties loaded" }
         else -> {
           resource.reader().use(::load)
-          logger.info("Loaded $size properties from [$filename] on classpath. Keys: $keys")
+          log.info { "Loaded $size properties from [$filename] on classpath. Keys: $keys" }
         }
       }
     }
@@ -92,8 +93,8 @@ private fun fromFile(file: File): Properties =
     Properties().apply {
       if (file.exists()) {
         file.reader().use(::load)
-        logger.info("Loaded $size properties from [${file.path}] in working directory. Keys: $keys")
+        log.info { "Loaded $size properties from [${file.path}] in working directory. Keys: $keys" }
       } else {
-        logger.info("File [${file.path}] not found in working directory - no properties loaded")
+        log.info { "File [${file.path}] not found in working directory - no properties loaded" }
       }
     }

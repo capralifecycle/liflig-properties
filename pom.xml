@@ -10,7 +10,8 @@
   <version>${revision}</version>
 
   <scm>
-    <developerConnection>scm:git:https://github.com/capralifecycle/liflig-properties.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/capralifecycle/liflig-properties.git
+    </developerConnection>
     <connection>scm:git:https://github.com/capralifecycle/liflig-properties.git</connection>
     <url>https://github.com/capralifecycle/liflig-properties</url>
     <tag>HEAD</tag>
@@ -37,7 +38,7 @@
     <kotlin.version>2.1.0</kotlin.version>
     <kotlinx.serialization.version>1.7.3</kotlinx.serialization.version>
     <aws-sdk.version>2.29.23</aws-sdk.version>
-    <slf4j.version>2.0.16</slf4j.version>
+    <liflig-logging.version>2.20241219.190242</liflig-logging.version>
 
     <junit.version>5.11.4</junit.version>
     <mockk.version>1.13.13</mockk.version>
@@ -74,11 +75,10 @@
       <version>${aws-sdk.version}</version>
     </dependency>
 
-
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
+      <groupId>no.liflig</groupId>
+      <artifactId>liflig-logging</artifactId>
+      <version>${liflig-logging.version}</version>
     </dependency>
 
     <!-- Testing -->
@@ -100,13 +100,14 @@
       <version>${mockk.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${slf4j.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/capralifecycle/*</url>
+    </repository>
+  </repositories>
 
   <build>
     <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

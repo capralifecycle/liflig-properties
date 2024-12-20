@@ -1,29 +1,20 @@
 package no.liflig.properties
 
-import org.slf4j.LoggerFactory
+import no.liflig.logging.Logger
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient
-import software.amazon.awssdk.services.secretsmanager.model.DecryptionFailureException
-import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest
-import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse
-import software.amazon.awssdk.services.secretsmanager.model.InternalServiceErrorException
-import software.amazon.awssdk.services.secretsmanager.model.InvalidParameterException
-import software.amazon.awssdk.services.secretsmanager.model.InvalidRequestException
+import software.amazon.awssdk.services.secretsmanager.model.*
 import software.amazon.awssdk.services.secretsmanager.model.ResourceNotFoundException
 import software.amazon.awssdk.services.ssm.SsmClient
-import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest
-import software.amazon.awssdk.services.ssm.model.InternalServerErrorException
-import software.amazon.awssdk.services.ssm.model.InvalidKeyIdException
-import software.amazon.awssdk.services.ssm.model.ParameterNotFoundException
-import software.amazon.awssdk.services.ssm.model.ParameterVersionNotFoundException
+import software.amazon.awssdk.services.ssm.model.*
 
 object AwsClientHelper {
-  private val logger = LoggerFactory.getLogger(AwsClientHelper::class.java)
+  private val log = Logger {}
   private val systemsManagement = SsmClient.builder().build()
   private val secretsManager = SecretsManagerClient.builder().build()
 
   @Throws(ParameterLoadingException::class)
   fun getParametersByPath(path: String): Map<String, String> {
-    logger.debug("Loading parameters at path {}", path)
+    log.debug { "Loading parameters at path ${path}" }
     val parameters = mutableMapOf<String, String>()
 
     val request =
@@ -68,7 +59,7 @@ object AwsClientHelper {
 
   @Throws(SecretLoadingException::class)
   fun getSecret(path: String): String {
-    logger.debug("Loading secret at path {}", path)
+    log.debug { "Loading secret at path ${path}" }
     val response: GetSecretValueResponse
 
     val request = GetSecretValueRequest.builder().secretId(path).build()
