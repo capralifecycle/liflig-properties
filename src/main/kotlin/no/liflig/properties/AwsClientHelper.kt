@@ -1,6 +1,6 @@
 package no.liflig.properties
 
-import no.liflig.logging.Logger
+import no.liflig.logging.getLogger
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient
 import software.amazon.awssdk.services.secretsmanager.model.*
 import software.amazon.awssdk.services.secretsmanager.model.ResourceNotFoundException
@@ -8,7 +8,7 @@ import software.amazon.awssdk.services.ssm.SsmClient
 import software.amazon.awssdk.services.ssm.model.*
 
 object AwsClientHelper {
-  private val log = Logger {}
+  private val log = getLogger {}
   private val systemsManagement = SsmClient.builder().build()
   private val secretsManager = SecretsManagerClient.builder().build()
 

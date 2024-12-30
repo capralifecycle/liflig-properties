@@ -2,11 +2,11 @@ package no.liflig.properties
 
 import java.io.File
 import java.util.Properties
-import no.liflig.logging.Logger
+import no.liflig.logging.getLogger
 
 private object PropertiesLoader
 
-private val log = Logger {}
+private val log = getLogger {}
 
 /**
  * Load properties from file(s) and AWS Parameter Store.
