@@ -36,7 +36,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <kotlin.version>2.1.0</kotlin.version>
-    <kotlinx.serialization.version>1.7.3</kotlinx.serialization.version>
+    <kotlinx.serialization.version>1.8.0</kotlinx.serialization.version>
     <aws-sdk.version>2.29.43</aws-sdk.version>
     <liflig-logging.version>2.20250114.130035</liflig-logging.version>
 
