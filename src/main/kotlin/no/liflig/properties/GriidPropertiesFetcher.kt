@@ -1,14 +1,13 @@
 package no.liflig.properties
 
 import java.util.Properties
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 class GriidPropertiesFetcher {
-  private val serializer = JsonElement.serializer()
-  private val json = Json {}
 
   @Throws(PropertyLoadingException::class)
   fun forPrefix(ssmPrefix: String): Properties =
@@ -28,22 +27,30 @@ class GriidPropertiesFetcher {
       AwsClientHelper.getParametersByPath("$path/secrets/")
           .flatMap { (parameterKey, parameterValue) ->
             val baseKey = parameterKey.removePrefix("$path/secrets/")
-            val jsonSecret = AwsClientHelper.getSecret(parameterValue)
+            val secret = AwsClientHelper.getSecret(parameterValue)
 
-            renameKeyAndSerializeValue(jsonSecret, baseKey)
+            renameKeyAndSerializeValue(secret, baseKey)
           }
           .toMap()
 
   internal fun renameKeyAndSerializeValue(
-      jsonSecret: String,
+      secret: String,
       baseKey: String,
-  ): List<Pair<String, String>> =
-      when (val jsonElement = json.decodeFromString(serializer, jsonSecret)) {
-        is JsonPrimitive -> listOf(Pair(baseKey, jsonElement.toString()))
-        is JsonObject -> serializeJsonObject(jsonElement, baseKey)
-        else ->
-            throw IllegalStateException("Secret $baseKey is neither JsonPrimitive nor JsonObject")
-      }
+  ): List<Pair<String, String>> {
+    val jsonElement =
+        try {
+          Json.decodeFromString<JsonElement>(secret)
+        } catch (_: SerializationException) {
+          // secret was not json, return raw string
+          return listOf(baseKey to secret)
+        }
+
+    return when (jsonElement) {
+      is JsonPrimitive -> listOf(Pair(baseKey, jsonElement.toString()))
+      is JsonObject -> serializeJsonObject(jsonElement, baseKey)
+      else -> throw IllegalStateException("Secret $baseKey is neither JsonPrimitive nor JsonObject")
+    }
+  }
 
   private fun serializeJsonObject(
       jsonElement: JsonObject,
