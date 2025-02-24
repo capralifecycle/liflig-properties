@@ -38,7 +38,7 @@
     <kotlin.version>2.1.10</kotlin.version>
     <kotlinx.serialization.version>1.8.0</kotlinx.serialization.version>
     <aws-sdk.version>2.30.7</aws-sdk.version>
-    <liflig-logging.version>2.20250224.044250</liflig-logging.version>
+    <liflig-logging.version>2.20250224.170623</liflig-logging.version>
 
     <junit.version>5.12.0</junit.version>
     <mockk.version>1.13.16</mockk.version>
