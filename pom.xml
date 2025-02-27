@@ -37,8 +37,8 @@
 
     <kotlin.version>2.1.10</kotlin.version>
     <kotlinx.serialization.version>1.8.0</kotlinx.serialization.version>
-    <aws-sdk.version>2.30.7</aws-sdk.version>
-    <liflig-logging.version>2.20250225.182003</liflig-logging.version>
+    <aws-sdk.version>2.30.29</aws-sdk.version>
+    <liflig-logging.version>2.20250227.113325</liflig-logging.version>
 
     <junit.version>5.12.0</junit.version>
     <mockk.version>1.13.16</mockk.version>
@@ -46,7 +46,7 @@
     <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
     <ktfmt.version>0.46</ktfmt.version>
-    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
   </properties>
 
   <dependencies>
