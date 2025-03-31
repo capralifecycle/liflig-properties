@@ -93,4 +93,63 @@ class PropertiesLoaderTest {
         )
     assertEquals("Dozer", properties.getProperty("hacker.name"))
   }
+
+  @Test
+  fun `should load environment variables when app prefix is set`() {
+    val properties =
+        loadPropertiesInternal(
+            environmentPrefix = "APP",
+            getFullEnv = {
+              mapOf(
+                  "APP_FOO_BAR" to "fb",
+                  "APP_ZIG_ZAG" to "zz",
+              )
+            },
+        )
+    assertEquals(2, properties.size)
+    assertEquals("fb", properties.getProperty("foo.bar"))
+    assertEquals("zz", properties.getProperty("zig.zag"))
+  }
+
+  @Test
+  fun `should load environment variables when app prefix is empty`() {
+    val properties =
+        loadPropertiesInternal(
+            environmentPrefix = "",
+            getFullEnv = {
+              mapOf(
+                  "SOME_OTHER_VAR" to "val",
+                  "APP_FOO_BAR" to "fb",
+                  "APP_ZIG_ZAG" to "zz",
+              )
+            },
+        )
+    assertEquals(3, properties.size)
+    assertEquals("fb", properties.getProperty("app.foo.bar"))
+    assertEquals("zz", properties.getProperty("app.zig.zag"))
+  }
+
+  @Test
+  fun `parameter store should override environment variables`() {
+    val awsPath = "/construct/current"
+    val griidPropertiesFetcher =
+        mockk<GriidPropertiesFetcher> {
+          every { forPrefix(awsPath) } returns mapOf("foo.bar" to "fromssm").toProperties()
+        }
+    val properties =
+        loadPropertiesInternal(
+            griidPropertiesFetcher = griidPropertiesFetcher,
+            environmentPrefix = "APP",
+            getenv = { awsPath },
+            getFullEnv = {
+              mapOf(
+                  "APP_FOO_BAR" to "fb",
+                  "APP_ZIG_ZAG" to "zz",
+              )
+            },
+        )
+    assertEquals(2, properties.size)
+    assertEquals("fromssm", properties.getProperty("foo.bar"))
+    assertEquals("zz", properties.getProperty("zig.zag"))
+  }
 }
