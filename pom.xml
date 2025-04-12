@@ -41,7 +41,7 @@
     <liflig-logging.version>2.20250411.173132</liflig-logging.version>
 
     <junit.version>5.12.1</junit.version>
-    <mockk.version>1.13.17</mockk.version>
+    <mockk.version>1.14.0</mockk.version>
 
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
