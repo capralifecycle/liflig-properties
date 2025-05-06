@@ -22,7 +22,9 @@ private val log = getLogger {}
  * before `overrides.properties`.
  *
  * if [environmentPrefix] is non-null, then environment variables are loaded as properties before
- * properties from AWS Parameter Store.
+ * properties from AWS Parameter Store. Note that passing secrets as environment variables has
+ * security implications since the environment is easily accessible, and passing secrets via files
+ * or reading them directly from a secrets manager is preferred.
  *
  * All sources are optional.
  *
