@@ -38,16 +38,30 @@
     <kotlin.version>2.1.21</kotlin.version>
     <kotlinx.serialization.version>1.8.1</kotlinx.serialization.version>
     <aws-sdk.version>2.31.58</aws-sdk.version>
-    <liflig-logging.version>2.20250602.165529</liflig-logging.version>
+    <liflig-logging.version>2.20250609.083728</liflig-logging.version>
 
+    <!-- Testing -->
     <junit.version>5.13.0</junit.version>
     <mockk.version>1.14.2</mockk.version>
+    <logback.version>1.5.18</logback.version>
 
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.44.5</spotless-maven-plugin.version>
     <ktfmt.version>0.46</ktfmt.version>
     <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -84,7 +98,7 @@
     <!-- Testing -->
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test</artifactId>
+      <artifactId>kotlin-test-junit5</artifactId>
       <version>${kotlin.version}</version>
       <scope>test</scope>
     </dependency>
@@ -95,9 +109,21 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>io.mockk</groupId>
       <artifactId>mockk-jvm</artifactId>
       <version>${mockk.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

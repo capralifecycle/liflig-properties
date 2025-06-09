@@ -7,7 +7,7 @@ import no.liflig.logging.getLogger
 
 private object PropertiesLoader
 
-private val log = getLogger {}
+private val log = getLogger()
 
 /**
  * Load properties from file(s) and AWS Parameter Store.

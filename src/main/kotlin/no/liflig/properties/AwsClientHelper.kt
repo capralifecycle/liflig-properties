@@ -2,13 +2,22 @@ package no.liflig.properties
 
 import no.liflig.logging.getLogger
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient
-import software.amazon.awssdk.services.secretsmanager.model.*
+import software.amazon.awssdk.services.secretsmanager.model.DecryptionFailureException
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse
+import software.amazon.awssdk.services.secretsmanager.model.InternalServiceErrorException
+import software.amazon.awssdk.services.secretsmanager.model.InvalidParameterException
+import software.amazon.awssdk.services.secretsmanager.model.InvalidRequestException
 import software.amazon.awssdk.services.secretsmanager.model.ResourceNotFoundException
 import software.amazon.awssdk.services.ssm.SsmClient
-import software.amazon.awssdk.services.ssm.model.*
+import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest
+import software.amazon.awssdk.services.ssm.model.InternalServerErrorException
+import software.amazon.awssdk.services.ssm.model.InvalidKeyIdException
+import software.amazon.awssdk.services.ssm.model.ParameterNotFoundException
+import software.amazon.awssdk.services.ssm.model.ParameterVersionNotFoundException
 
 object AwsClientHelper {
-  private val log = getLogger {}
+  private val log = getLogger()
   private val systemsManagement = SsmClient.builder().build()
   private val secretsManager = SecretsManagerClient.builder().build()
 
