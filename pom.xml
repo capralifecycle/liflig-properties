@@ -41,7 +41,7 @@
     <liflig-logging.version>2.20250609.100949</liflig-logging.version>
 
     <!-- Testing -->
-    <junit.version>5.13.0</junit.version>
+    <junit.version>5.13.1</junit.version>
     <mockk.version>1.14.2</mockk.version>
     <logback.version>1.5.18</logback.version>
 
