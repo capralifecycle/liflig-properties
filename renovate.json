@@ -1,7 +1,5 @@
 {
   "extends": [
-    "github>capraconsulting/renovate-config:library",
-    "github>capraconsulting/renovate-config:aggressive",
-    "helpers:pinGitHubActionDigestsToSemver"
+    "github>capralifecycle/renovate-config:monthly-grouped"
   ]
 }
