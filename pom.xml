@@ -42,7 +42,7 @@
 
     <!-- Testing -->
     <junit.version>5.13.3</junit.version>
-    <mockk.version>1.14.4</mockk.version>
+    <mockk.version>1.14.5</mockk.version>
     <logback.version>1.5.18</logback.version>
 
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
