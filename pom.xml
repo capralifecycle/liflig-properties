@@ -46,7 +46,7 @@
     <logback.version>1.5.18</logback.version>
 
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-    <spotless-maven-plugin.version>2.46.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
     <ktfmt.version>0.46</ktfmt.version>
     <flatten-maven-plugin.version>1.7.1</flatten-maven-plugin.version>
   </properties>
