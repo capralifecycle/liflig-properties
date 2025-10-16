@@ -117,7 +117,7 @@ private fun fromFile(file: File): Properties =
 
 private fun fromEnvironment(
     environmentPrefix: String?,
-    getFullEnv: () -> Map<String, String>
+    getFullEnv: () -> Map<String, String>,
 ): Properties {
   if (environmentPrefix != null) {
     val props =
