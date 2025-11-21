@@ -26,7 +26,7 @@
 
   <properties>
     <!-- Increment major version for breaking changes -->
-    <major-version>2</major-version>
+    <major-version>3</major-version>
     <revision>${major-version}.local-SNAPSHOT</revision>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,18 +37,18 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <kotlin.version>2.2.20</kotlin.version>
+    <kotlin.version>2.2.21</kotlin.version>
     <kotlinx.serialization.version>1.9.0</kotlinx.serialization.version>
-    <aws-sdk.version>2.35.10</aws-sdk.version>
-    <liflig-logging.version>2.20251016.073034</liflig-logging.version>
+    <aws-sdk.version>2.39.1</aws-sdk.version>
+    <liflig-logging.version>3.20251121.115719</liflig-logging.version>
 
     <!-- Testing -->
-    <junit.version>6.0.0</junit.version>
+    <junit.version>6.0.1</junit.version>
     <mockk.version>1.14.6</mockk.version>
-    <logback.version>1.5.19</logback.version>
+    <logback.version>1.5.21</logback.version>
 
     <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-    <spotless-maven-plugin.version>3.0.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>3.1.0</spotless-maven-plugin.version>
     <ktfmt.version>0.58</ktfmt.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
   </properties>
