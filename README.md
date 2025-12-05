@@ -26,7 +26,7 @@ This library is currently only distributed in Liflig internal repositories.
 To check build before pushing:
 
 ```bash
-mvn verify
+make
 ```
 
 The CI server will automatically release new version for builds on master.
@@ -36,11 +36,11 @@ The CI server will automatically release new version for builds on master.
 Lint code:
 
 ```bash
-mvn spotless:check
+make lint
 ```
 
 Fix lint errors:
 
 ```bash
-mvn spotless:apply
+make lint-fix
 ```
