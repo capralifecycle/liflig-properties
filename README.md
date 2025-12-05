@@ -1,6 +1,8 @@
 # liflig-properties
 
-Library for fetching properties from local files and AWS Parameter Store and Secrets Manager. This library also contains type- and null-safe extension methods to `java.util.Properties` for Kotlin.
+Library for fetching properties from local files and AWS Parameter Store and Secrets Manager, as well as type- and null-safe extension methods to `java.util.Properties` for Kotlin.
+
+## Description
 
 `liflig-cdk` has built-in support for creating secrets and properties, allowing `liflig-properties` to load these properties when a ECS service starts.
 A ECS service defined through `liflig-cdk`, will automatically get the environment value`SSM_PREFIX`. This prefix is the prefix for
@@ -19,28 +21,16 @@ When the service starts, this library fetches all properties for the application
 
 This library is currently only distributed in Liflig internal repositories.
 
-## Contributing
+## Development
 
-### Build
-
-To check build before pushing:
+Common commands during development:
 
 ```bash
-make
+$ make          # build, lint and test project
+$ make lint     # lint code
+$ make lint-fix # apply safe lint fixes
+$ make test     # run tests
+$ make clean    # cleanup build artifacts
 ```
 
 The CI server will automatically release new version for builds on master.
-
-### Lint
-
-Lint code:
-
-```bash
-make lint
-```
-
-Fix lint errors:
-
-```bash
-make lint-fix
-```
