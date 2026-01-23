@@ -41,4 +41,22 @@ internal class GriidPropertiesFetcherTest {
     val actual = GriidPropertiesFetcher().renameKeyAndSerializeValue(password, key)
     assertEquals(expected, actual)
   }
+
+  @Test
+  fun `renameKeyAndSerializeValue password starting with special characters`() {
+    val key = "app.db"
+    val password = "}\";:!@#secret123}\";:"
+    val expected = listOf(Pair(key, password))
+    val actual = GriidPropertiesFetcher().renameKeyAndSerializeValue(password, key)
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `renameKeyAndSerializeValue password only containing special characters`() {
+    val key = "app.db"
+    val password = """!@#%^&*()[]{}";:,.<>?/\|-_+="""
+    val expected = listOf(Pair(key, password))
+    val actual = GriidPropertiesFetcher().renameKeyAndSerializeValue(password, key)
+    assertEquals(expected, actual)
+  }
 }
