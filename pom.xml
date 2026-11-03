@@ -47,6 +47,7 @@
     <mockk.version>1.14.11</mockk.version>
     <logback.version>1.6.5</logback.version>
 
+    <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
     <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>3.10.4</spotless-maven-plugin.version>
     <ktfmt.version>0.58</ktfmt.version>
@@ -162,6 +163,28 @@
             <aws.region>eu-west-1</aws.region>
           </systemPropertyVariables>
         </configuration>
+      </plugin>
+
+      <!-- Jacoco for test coverage reports -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
